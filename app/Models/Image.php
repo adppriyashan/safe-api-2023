@@ -5,9 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Disaster extends Model
+class Image extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['district', 'user', 'type', 'lng', 'ltd', 'status'];
+    protected $fillable = ['path'];
 }

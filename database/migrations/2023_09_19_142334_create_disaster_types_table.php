@@ -11,14 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('disasters', function (Blueprint $table) {
+        Schema::create('disaster_types', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('district');
-            $table->unsignedBigInteger('user');
-            $table->unsignedBigInteger('type');
-            $table->string('lng');
-            $table->string('ltd');
-            $table->enum('status', [1, 2, 3])->default(1);
+            $table->string('type');
             $table->timestamps();
         });
     }
@@ -28,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('disasters');
+        Schema::dropIfExists('disaster_types');
     }
 };
