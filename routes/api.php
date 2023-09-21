@@ -1,19 +1,23 @@
 <?php
 
+use App\Http\Controllers\API\DistrictController;
+use App\Http\Controllers\API\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "api" middleware group. Make something great!
-|
-*/
+Route::prefix('/raw')->group(function () {
+    Route::post('/districts', [DistrictController::class, 'getDistricts']);
+});
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::prefix('/auth')->group(function () {
+    Route::post('/register', [UserController::class, 'register']);
+    Route::post('/login', [UserController::class, 'login']);
+    Route::post('/sent-otp', [UserController::class, 'sendOtp']);
+    Route::post('/reset', [UserController::class, 'resetPassword']);
+});
+
+Route::prefix('/authenticated')->middleware('auth:sanctum')->group(function () {
+    Route::prefix('/user')->group(function () {
+        Route::post('/getData', [UserController::class, 'getData']);
+    });
 });
