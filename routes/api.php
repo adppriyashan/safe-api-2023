@@ -18,6 +18,6 @@ Route::prefix('/auth')->group(function () {
 
 Route::prefix('/authenticated')->middleware('auth:sanctum')->group(function () {
     Route::prefix('/user')->group(function () {
-        Route::post('/getData', [UserController::class, 'getData']);
+        Route::post('/get-data', [UserController::class, 'getData']);
     });
 });

@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('name');
             $table->string('nic')->unique();
             $table->string('contact');
-            $table->mediumText('address');
             $table->unsignedBigInteger('district');
             $table->string('password');
             $table->boolean('isadmin')->default(false);

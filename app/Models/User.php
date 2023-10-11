@@ -22,7 +22,6 @@ class User extends Authenticatable
         'password',
         'nic',
         'contact',
-        'address',
         'district',
         'isadmin'
     ];

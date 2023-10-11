@@ -27,7 +27,6 @@ class UserController extends Controller
                     'password' => 'required|min:8',
                     'nic' => 'required|unique:users,nic',
                     'contact' => 'required',
-                    'address' => 'required',
                     'district' => 'required|exists:districts,id'
                 ]
             );
@@ -36,12 +35,11 @@ class UserController extends Controller
                 return $this->failure('Validation error', $validateUser->errors(), 401);
             }
 
-            $user = User::create([
+            User::create([
                 'name' => $request->name,
                 'password' => Hash::make($request->password),
                 'nic' => $request->nic,
                 'contact' => $request->contact,
-                'address' => $request->address,
                 'district' => $request->district,
             ]);
 
@@ -72,7 +70,7 @@ class UserController extends Controller
 
             $user = User::where('nic', $request->nic)->first();
 
-            return $this->success('User successfully created.', $user->createToken(env('AUTH_TOKEN', 'TEST_TOKEN_KEY'))->plainTextToken);
+            return $this->success('User successfully created.', ['user' => $user, 'token' => $user->createToken(env('AUTH_TOKEN', 'TEST_TOKEN_KEY'))->plainTextToken]);
         } catch (Exception $e) {
             return $this->failure($e->getMessage(), status: 500);
         }
@@ -106,9 +104,9 @@ class UserController extends Controller
         }
     }
 
-    public function getData(Request $request)
+    public function getData()
     {
-        return Auth::user();
+        return $this->success('User authenticated successfully.', Auth::user());
     }
 
     public function resetPassword(Request $request)
