@@ -94,7 +94,7 @@ class UserController extends Controller
 
             if ($user && $user->contact) {
                 $code = rand(100000, 999999);
-                $this->sendNow('Please use ' . $code . ' OTP code to recover your account', $user->contact);
+                // $this->sendNow('Please use ' . $code . ' OTP code to recover your account', $user->contact);
                 return $this->success('OTP code sent.', ['code' => $code, 'nic' => $request->nic]);
             }
 
