@@ -9,5 +9,10 @@ class Disaster extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['district', 'user', 'type', 'lng', 'ltd', 'status'];
+    protected $fillable = ['district', 'user', 'moreinfo', 'type', 'lng', 'ltd', 'status'];
+
+    public function images()
+    {
+        return $this->hasMany(DisasterHasImage::class, 'disaster', 'id')->with('imageData');
+    }
 }

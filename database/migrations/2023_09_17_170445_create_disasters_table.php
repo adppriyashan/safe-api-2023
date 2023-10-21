@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('district');
             $table->unsignedBigInteger('user');
             $table->unsignedBigInteger('type');
+            $table->longText('moreinfo');
             $table->string('lng');
             $table->string('ltd');
             $table->enum('status', [1, 2, 3])->default(1);

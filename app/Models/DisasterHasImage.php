@@ -10,4 +10,8 @@ class DisasterHasImage extends Model
     use HasFactory;
 
     protected $fillable = ['disaster', 'image'];
+
+    public function imageData(){
+        return $this->hasOne(Image::class, 'id', 'image');
+    }
 }
