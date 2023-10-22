@@ -55,6 +55,8 @@ class User extends Authenticatable
         return $this->hasMany(Disaster::class, 'district', 'district')->where('status', 2);
     }
 
+    //comment
+
     public function getIsSafeAttribute()
     {
         return count($this->disasterData) == 0;
