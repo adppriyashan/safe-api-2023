@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Disaster;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -19,7 +20,7 @@ return new class extends Migration
             $table->longText('moreinfo');
             $table->string('lng');
             $table->string('ltd');
-            $table->enum('status', [1, 2, 3])->default(1);
+            $table->enum('status', array_keys(Disaster::$status))->default(1);
             $table->timestamps();
         });
     }

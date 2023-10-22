@@ -28,8 +28,8 @@ Route::prefix('/authenticated')->middleware('auth:sanctum')->group(function () {
 
     Route::prefix('/disaster')->group(function () {
         Route::post('/list', [DisasterController::class, 'fetch']);
+        Route::post('/verified/list', [DisasterController::class, 'fetchVerified']);
         Route::post('/add', [DisasterController::class, 'create']);
-        Route::post('/approve', [DisasterController::class, 'approve']);
-        Route::post('/reject', [DisasterController::class, 'reject']);
+        Route::post('/status', [DisasterController::class, 'status']);
     });
 });
