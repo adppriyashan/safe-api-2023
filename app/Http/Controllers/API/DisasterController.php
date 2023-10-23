@@ -7,7 +7,9 @@ use App\Models\Disaster;
 use App\Models\DisasterHasImage;
 use App\Models\DisasterType;
 use App\Models\Image;
+use App\Models\User;
 use App\Traits\RespondsWithHttpStatus;
+use App\Traits\SendSMS;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
@@ -18,6 +20,7 @@ use Illuminate\Support\Facades\Validator;
 class DisasterController extends Controller
 {
     use RespondsWithHttpStatus;
+    use SendSMS;
 
     function getTypeData()
     {
@@ -56,6 +59,11 @@ class DisasterController extends Controller
                 'ltd' => $request->ltd,
                 'moreinfo' => $request->moreinfo,
             ]);
+
+            //send sms
+            foreach (User::where('is_admin', 1)->where('district', Auth::user()->district)->pluck('contact') as $key => $value) {
+                $this->sendNow('New misfortune submitted, Check the location via : https://www.google.com/maps/search/?api=1&query=' . $request->ltd . ',' . $request->lng, $value);
+            }
 
             for ($i = 1; $i < 4; $i++) {
                 if ($request->has('image' . $i)) {
@@ -158,9 +166,17 @@ class DisasterController extends Controller
         }
 
         try {
-            Disaster::where('id', $request->id)->update([
+            $disaster = Disaster::where('id', $request->id)->first();
+
+            //send sms
+            foreach (User::where('is_admin', 1)->where('district', $disaster->district)->pluck('contact') as $key => $value) {
+                $this->sendNow('Misfortune detected and verified in your district, Please make safe yourself, Please login to SAFE app to more information.', $value);
+            }
+
+            $disaster->update([
                 'status' => $request->status
             ]);
+
             return $this->success('Data fetched successfully.');
         } catch (Exception $e) {
             error_log($e->getMessage());
