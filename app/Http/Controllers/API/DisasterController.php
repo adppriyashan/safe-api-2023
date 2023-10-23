@@ -171,7 +171,7 @@ class DisasterController extends Controller
             if ($request->status == 2) {
                 //send sms
                 foreach (User::where('isadmin', 0)->where('district', $disaster->district)->pluck('contact') as $key => $value) {
-                    $this->sendNow('Misfortune detected and verified in your district, Please make safe yourself, Please login to SAFE app to more information.', $value);
+                    $this->sendNow('Misfortune (' . $disaster->disaster_type . ') has been detected and verified in your district, Please make safe yourself, Please login to SAFE app to more information.', $value);
                 }
             }
 
