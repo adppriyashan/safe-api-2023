@@ -57,6 +57,6 @@ class User extends Authenticatable
 
     public function getIsSafeAttribute()
     {
-        return $this->disasterData->count() > 0;
+        return $this->disasterData->count() > 0 ? 0 : 1;
     }
 }
