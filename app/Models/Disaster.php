@@ -44,7 +44,7 @@ class Disaster extends Model
 
     public function getDatetimeAttribute()
     {
-        return Carbon::parse($this->created_at)->format('Y/m/d H:i:s a');
+        return Carbon::parse($this->created_at)->format('Y/m/d H:i:A');
     }
 
     public function getImagesAttribute()
