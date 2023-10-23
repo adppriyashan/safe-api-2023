@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -43,7 +44,7 @@ class Disaster extends Model
 
     public function getDatetimeAttribute()
     {
-        return $this->created_at;
+        return Carbon::parse($this->created_at)->format('Y/m/d H:i:s');
     }
 
     public function getImagesAttribute()
