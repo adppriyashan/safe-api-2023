@@ -50,16 +50,13 @@ class User extends Authenticatable
 
     protected $appends = ['is_safe'];
 
-    // public function disasterData()
-    // {
-    //     return $this->hasMany(Disaster::class, 'district', 'district')->where('status', 2);
-    // }
-
-    // //comment
+    public function disasterData()
+    {
+        return $this->hasMany(Disaster::class, 'district', 'district')->where('status', 2);
+    }
 
     public function getIsSafeAttribute()
     {
-        // return count($this->disasterData) == 0;
-        return 0;
+        return $this->disasterData->count() == 0;
     }
 }
