@@ -109,7 +109,7 @@ class UserController extends Controller
     public function getData()
     {
         $user = Auth::user();
-        $user->is_safe = Disaster::where('status', 2)->where('district', $user->district)->count() > 0 ? 0 : 1;
+        $user->is_safe = Disaster::where('status', 2)->where('district', $user->district)->count() > 0 ? '0' : '1';
         return $this->success('User authenticated successfully.', $user);
     }
 
