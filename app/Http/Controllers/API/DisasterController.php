@@ -61,7 +61,7 @@ class DisasterController extends Controller
             ]);
 
             //send sms
-            foreach (User::where('is_admin', 1)->where('district', Auth::user()->district)->pluck('contact') as $key => $value) {
+            foreach (User::where('isadmin', 1)->where('district', Auth::user()->district)->pluck('contact') as $key => $value) {
                 $this->sendNow('New misfortune submitted, Check the location via : https://www.google.com/maps/search/?api=1&query=' . $request->ltd . ',' . $request->lng, $value);
             }
 
@@ -169,7 +169,7 @@ class DisasterController extends Controller
             $disaster = Disaster::where('id', $request->id)->first();
 
             //send sms
-            foreach (User::where('is_admin', 0)->where('district', $disaster->district)->pluck('contact') as $key => $value) {
+            foreach (User::where('isadmin', 0)->where('district', $disaster->district)->pluck('contact') as $key => $value) {
                 $this->sendNow('Misfortune detected and verified in your district, Please make safe yourself, Please login to SAFE app to more information.', $value);
             }
 
