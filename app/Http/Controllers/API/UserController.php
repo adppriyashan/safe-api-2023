@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\Disaster;
 use App\Models\User;
 use App\Traits\RespondsWithHttpStatus;
 use App\Traits\SendSMS;
@@ -69,6 +70,7 @@ class UserController extends Controller
             }
 
             $user = User::where('nic', $request->nic)->first();
+            $user->is_safe = Disaster::where('status', 2)->where('district', $user->district)->count() ? 0 : 1;
 
             return $this->success('User successfully created.', ['user' => $user, 'token' => $user->createToken(env('AUTH_TOKEN', 'TEST_TOKEN_KEY'))->plainTextToken]);
         } catch (Exception $e) {
@@ -106,7 +108,9 @@ class UserController extends Controller
 
     public function getData()
     {
-        return $this->success('User authenticated successfully.', Auth::user());
+        $user = Auth::user();
+        $user->is_safe = Disaster::where('status', 2)->where('district', $user->district)->count() > 0 ? 0 : 1;
+        return $this->success('User authenticated successfully.', $user);
     }
 
     public function resetPassword(Request $request)

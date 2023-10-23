@@ -45,18 +45,4 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
-
-
-
-    protected $appends = ['is_safe'];
-
-    public function disasterData()
-    {
-        return $this->hasMany(Disaster::class, 'district', 'district')->where('status', 2);
-    }
-
-    public function getIsSafeAttribute()
-    {
-        return $this->disasterData->count();
-    }
 }
